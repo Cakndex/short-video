@@ -1,3 +1,3 @@
 ### short-video
 
-just for test
+just for test in qiuniu cloud

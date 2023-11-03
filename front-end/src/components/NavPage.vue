@@ -191,7 +191,8 @@ nav {
   margin-left: 16px;
   position: fixed;
   overflow: visible;
-  border: #000 2px solid;
+  z-index: 10;
+  //   border: #000 2px solid;
   caret-color: transparent; /* 将光标颜色设置为透明 */
   ul {
     padding: 0;

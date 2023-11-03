@@ -92,9 +92,9 @@ footer {
     padding: 10px 15px;
     margin: 0 20px;
     border: none;
-    border-radius: 40px;
     background: none;
     cursor: pointer;
+    transition: all 0.1s ease-out;
     span {
       font-size: 1rem;
       font-weight: 600;
@@ -102,6 +102,7 @@ footer {
   }
   button:hover {
     background-color: #f7f7f7;
+    border-radius: 40px;
   }
 }
 .icon {

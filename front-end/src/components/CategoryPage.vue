@@ -1,19 +1,36 @@
-<script setup></script>
+<script setup>
+import { ref } from 'vue'
+const category = [
+  '推荐',
+  '穿搭',
+  '美食',
+  '彩妆',
+  '影视',
+  '职场',
+  '情感',
+  '家具',
+  '游戏',
+  '旅行',
+  '健身'
+]
+const nowindex = ref(0)
+console.log(nowindex.value)
+const changeindex = (index) => {
+  nowindex.value = index
+}
+</script>
 
 <template>
   <div class="category">
     <ul>
-      <li>推荐</li>
-      <li>穿搭</li>
-      <li>美食</li>
-      <li>彩妆</li>
-      <li>影视</li>
-      <li>职场</li>
-      <li>情感</li>
-      <li>家具</li>
-      <li>游戏</li>
-      <li>旅行</li>
-      <li>健身</li>
+      <li
+        v-for="(item, index) in category"
+        :key="index"
+        :class="{ active: index === nowindex }"
+        @click="changeindex(index)"
+      >
+        {{ item }}
+      </li>
     </ul>
   </div>
 </template>
@@ -43,5 +60,12 @@
     background-color: #f7f7f7;
     border-radius: 20px;
   }
+}
+.active {
+  font-weight: 600;
+  cursor: pointer;
+  background-color: #f7f7f7;
+  border-radius: 20px;
+  color: #333333 !important;
 }
 </style>

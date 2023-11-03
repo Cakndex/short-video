@@ -14,8 +14,6 @@ const road = async () => {
     const response = await axios.get('/test.json')
     const data = response.data
     videolist.value = videolist.value.concat(data)
-    console.log(data)
-    console.log(videolist.value)
   } catch (error) {
     console.error(error)
   }
@@ -44,6 +42,18 @@ const scrollhandle = () => {
     console.log('该加载了')
   }
 }
+
+const video = ref()
+// 鼠标悬浮视频播放
+const playvideo = (e) => {
+  const element = e.target
+  element.play()
+}
+// 鼠标离开视频暂停
+const pausevideo = (e) => {
+  const element = e.target
+  element.pause()
+}
 </script>
 
 <template>
@@ -51,14 +61,23 @@ const scrollhandle = () => {
   <HeaderPage></HeaderPage>
   <NavPage></NavPage>
   <section id="body" ref="body">
-    <button @click="road()">sjsh</button>
-    <div class="videolist-left">
+    <div class="videolist videolist-1" v-for="index in 4" :key="index">
       <section
-        class="video-left"
+        class="video video-col1"
         v-for="(item, index) in videolist"
         :key="index"
       >
-        <video :src="item.url" preload="true" controls width="250"></video>
+        <div class="container">
+          <video
+            :src="item.url"
+            preload="true"
+            controls
+            width="250"
+            ref="video"
+            @mouseover="playvideo($event)"
+            @mouseleave="pausevideo($event)"
+          ></video>
+        </div>
         <h1>{{ item.name }}</h1>
       </section>
     </div>
@@ -74,21 +93,28 @@ const scrollhandle = () => {
   height: 78vh;
   overflow-y: scroll;
   overflow-x: hidden;
-  border-radius: 20px;
+
   //   隐藏滚动条
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
+  display: flex;
 }
 #body::-webkit-scrollbar {
   display: none; /* Chrome Safari */
 }
-.videolist-left {
-  width: 25%;
-  background-color: aqua;
-  .video-left {
+.videolist {
+  width: 23%;
+  height: max-content;
+  // background-color: aqua; // 测试颜色
+  .video {
+    margin: 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
   }
+}
+.container {
+  border-radius: 20px;
+  overflow: hidden;
 }
 </style>

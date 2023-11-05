@@ -1,7 +1,6 @@
 <script setup>
 import axios from 'axios'
 import { ref, onMounted, onUnmounted } from 'vue'
-// import { ref } from 'vue'
 // 视频列表
 const videolist = ref([])
 const loading = ref(false)
@@ -19,15 +18,28 @@ const road = async () => {
   }
   loading.value = false
 }
-road()
+
+// 点击视频
+let url = ref()
+const showvideo = ref(false)
+console.log(showvideo.value)
+// 查看视频
+const show = (nowurl) => {
+  url.value = nowurl
+  showvideo.value = !showvideo.value
+} //切换showvideo
+const changeshow = (state) => {
+  showvideo.value = state
+}
+
 // 无线滚动
 onMounted(() => {
   body.value.addEventListener('scroll', scrollhandle, false)
+  road()
 })
 onUnmounted(() => {
   window.removeEventListener('scroll', scrollhandle, false)
 })
-
 const scrollhandle = () => {
   // 页面总高
   const scrollHeight = body.value.scrollHeight
@@ -57,9 +69,9 @@ const pausevideo = (e) => {
 </script>
 
 <template>
-  <CategoryPage></CategoryPage>
-  <HeaderPage></HeaderPage>
   <NavPage></NavPage>
+  <HeaderPage></HeaderPage>
+  <categoryPage></categoryPage>
   <section id="body" ref="body">
     <div class="videolist videolist-1" v-for="index in 4" :key="index">
       <section
@@ -71,19 +83,31 @@ const pausevideo = (e) => {
           <video
             :src="item.url"
             preload="true"
-            controls
             width="250"
             ref="video"
             @mouseover="playvideo($event)"
             @mouseleave="pausevideo($event)"
+            @click="show(item.url)"
           ></video>
+          <!-- <a :href="`/video?${item.url}`"></a> -->
         </div>
         <h1>{{ item.name }}</h1>
       </section>
     </div>
+    <VideoPage
+      v-if="showvideo"
+      :item="{ item, showvideo, url }"
+      @changeshow="changeshow"
+    ></VideoPage>
   </section>
 </template>
-
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+</style>
 <style scoped lang="less">
 #body {
   position: absolute;

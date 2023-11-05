@@ -77,10 +77,12 @@ footer {
     border: none;
     background-color: #f7f7f7;
     caret-color: #ee6775;
+    transition: width 0.4s ease-out;
   }
 }
 .search-input:focus {
   outline: none;
+  width: 100%;
 }
 
 // 文字部分

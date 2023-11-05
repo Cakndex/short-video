@@ -14,7 +14,6 @@ const category = [
   '健身'
 ]
 const nowindex = ref(0)
-console.log(nowindex.value)
 const changeindex = (index) => {
   nowindex.value = index
 }

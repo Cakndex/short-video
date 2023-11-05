@@ -22,7 +22,7 @@ const videoList = ref([
     url: 'https://prod-streaming-video-msn-com.akamaized.net/178161a4-26a5-4f84-96d3-6acea1909a06/2213bcd0-7d15-4da0-a619-e32d522572c0.mp4'
   },
   {
-    url: 'https://prod-streaming-video-msn-com.akamaized.net/a8c412fa-f696-4ff2-9c76-e8ed9cdffe0f/604a87fc-e7bc-463e-8d56-cde7e661d690.mp4'
+    url: 'http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4'
   },
   {
     url: 'https://prod-streaming-video-msn-com.akamaized.net/fe13f13c-c2cc-4998-b525-038b23bfa9b5/1a9d30ca-54be-411e-8b09-d72ef4488e05.mp4'
@@ -46,15 +46,19 @@ function handleKeyDown(event) {
     // 上键切换到上一个视频
     activeIndex.value =
       (activeIndex.value - 1 + videoList.value.length) % videoList.value.length
-    alert(activeIndex.value)
+    // alert(activeIndex.value)
     transformY.value += 510
   } else if (event.key === 'ArrowDown') {
     // 下键切换到下一个视频
+    // alert(activeIndex.value)
+    // alert(-transformY.value / 510)
+    // alert(activeIndex.value === -transformY.value / 510)
     activeIndex.value = (activeIndex.value + 1) % videoList.value.length
-    alert(activeIndex.value)
+
     transformY.value -= 510
   }
 }
+
 // 评论
 const comment = ref([
   {
@@ -110,7 +114,7 @@ const commit = (value) => {
 </script>
 
 <template>
-  <div class="bg" @keydown.prevent="handleKeyDown">
+  <div class="bg" @keydown="handleKeyDown">
     <!-- 关闭按钮 -->
     <div class="icon" @click="changeshowvideo">
       <p>{{ props.showvideo }}</p>
@@ -142,9 +146,28 @@ const commit = (value) => {
           class="container"
           :style="{ transform: `translateY(${transformY}px)` }"
         >
-          <div><video :src="url" autoplay controls></video></div>
-          <div><video :src="activeVideo.url" autoplay controls></video></div>
-          <div><video :src="nextVideo.url" autoplay controls></video></div>
+          <div><video :src="url" autoplay controls volume="0.5"></video></div>
+          <div>
+            <video
+              :src="activeVideo.url"
+              :autoplay="activeIndex === 1"
+              controls
+            ></video>
+          </div>
+          <div>
+            <video
+              :src="nextVideo.url"
+              controls
+              :autoplay="activeIndex === 2"
+            ></video>
+          </div>
+          <div>
+            <video
+              :src="nextVideo.url"
+              controls
+              :autoplay="activeIndex === 3"
+            ></video>
+          </div>
         </div>
       </div>
       <div class="right">
@@ -200,6 +223,7 @@ const commit = (value) => {
   z-index: 999;
   overflow: auto;
   background-color: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(1px); /* 调整模糊程度 */
 }
 .video {
   z-index: 999;
@@ -208,7 +232,8 @@ const commit = (value) => {
   left: 50%;
   transform: translate(-50%, -50%);
   width: 80vw;
-  height: 68vh;
+  height: 67.5vh;
+  border: #fff 10px solid;
   display: flex;
   border-radius: 20px;
   background-color: #000000;

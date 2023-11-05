@@ -1,9 +1,13 @@
-<script setup></script>
+<script setup>
+import { useRouter } from 'vue-router'
+// 路由
+const router = useRouter()
+</script>
 
 <template>
   <nav>
     <ul>
-      <li>
+      <li class="find" @click="router.push('/')">
         <svg
           t="1698938807530"
           class="icon"
@@ -34,7 +38,7 @@
           <span>&nbsp;发现</span>
         </a>
       </li>
-      <li>
+      <li @click="router.push('/login')">
         <svg
           t="1698939605507"
           class="icon"
@@ -62,10 +66,10 @@
           ></path>
         </svg>
         <a href="#">
-          <span>&nbsp;发布</span>
+          <span>&nbsp;登录</span>
         </a>
       </li>
-      <li>
+      <li @click="router.push('/collect')">
         <svg
           t="1698939955137"
           class="icon"
@@ -123,10 +127,10 @@
           ></path>
         </svg>
         <a href="#">
-          <span>&nbsp;通知</span>
+          <span>&nbsp;收藏</span>
         </a>
       </li>
-      <li>
+      <li @click="router.push('/user')">
         <svg
           t="1698940047990"
           class="icon"
@@ -190,12 +194,16 @@ nav {
   margin-top: 36px;
   margin-left: 16px;
   position: fixed;
+  bottom: 0;
   overflow: visible;
   z-index: 10;
   //   border: #000 2px solid;
   caret-color: transparent; /* 将光标颜色设置为透明 */
   ul {
     padding: 0;
+    .find {
+      background-color: #f7f7f7;
+    }
     li {
       display: flex;
       width: 100%;
@@ -221,6 +229,6 @@ nav {
 }
 .more {
   position: absolute;
-  bottom: 10%;
+  bottom: 5%;
 }
 </style>
